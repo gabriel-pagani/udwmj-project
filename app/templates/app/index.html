@@ -8,6 +8,21 @@
 {% endblock head %}
 
 {% block body %} 
+    <div class="search-bar">
+        <div class="search-container">
+            <span class="search-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input type="text" class="search-input" placeholder="Search for recipe here!">
+        </div>
+        <button class="filter-btn">
+            <span>
+                <i class="fa-solid fa-filter"></i>
+            </span>
+        </button>
+        <button class="publish-btn">Publish a new recipe</button>
+    </div>
+
     <div class="recipe-grid">
         {% for recipe_id, recipe_data in recipes.items %}
             {% include 'app/partials/recipe_card.html' with recipe_id=recipe_id recipe_data=recipe_data %}
