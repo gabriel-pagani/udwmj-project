@@ -271,6 +271,14 @@ body {
   color: var(--white);
 }
 
+.publish-btn .publish-text {
+  display: inline;
+}
+
+.publish-btn .publish-icon {
+  display: none;
+}
+
 .no-recipes {
   grid-column: 1 / -1;
   text-align: center;
@@ -297,6 +305,13 @@ body {
   .recipe-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .publish-btn .publish-text {
+    display: none;
+  }
+  .publish-btn .publish-icon {
+    display: inline;
   }
 }
 
