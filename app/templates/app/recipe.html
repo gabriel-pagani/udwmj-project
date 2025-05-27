@@ -1,0 +1,63 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block title %}{{ recipe.title }}{% endblock title %}
+
+{% block head %}
+    <link href="{% static "app/css/style.css" %}" rel="stylesheet"/>
+{% endblock head %}
+
+{% block body %}
+    <div class="recipe-detail-container">
+        <div class="recipe-header-detail">
+            <div class="recipe-image-detail">
+                {% if recipe.cover %}
+                    <img src="{{ recipe.cover.url }}" alt="{{ recipe.title }}" class="recipe-main-image">
+                {% else %}
+                    <div class="recipe-image-placeholder-detail">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="recipe-info">
+                <h1 class="recipe-title-detail">{{ recipe.title }}</h1>
+                {% if recipe.category %}
+                    <span class="recipe-category">{{ recipe.category.name }}</span>
+                {% endif %}
+                <p class="recipe-description-detail">{{ recipe.description }}</p>
+                
+                <div class="recipe-meta">
+                    <div class="meta-item">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>{{ recipe.preparation_time }} min</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-users"></i>
+                        <span>{{ recipe.servings }} servings</span>
+                    </div>
+                    {% if recipe.author %}
+                    <div class="meta-item">
+                        <i class="fa-solid fa-user"></i>
+                        <span>{{ recipe.author.username }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="recipe-instructions">
+            <h2>Instructions</h2>
+            <div class="instructions-content">
+                {{ recipe.instructions|linebreaks }}
+            </div>
+        </div>
+        
+        <div class="recipe-actions-detail">
+            <a href="{% url 'app:home' %}" class="btn btn-secondary">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Recipes
+            </a>
+        </div>
+    </div>
+{% endblock body %}

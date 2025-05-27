@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from app.models import Recipe
 
 
@@ -27,3 +27,8 @@ def home(request):
 
 def about(request):
     return render(request, 'app/about.html')
+
+
+def recipe_detail(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id, is_published=True)
+    return render(request, 'app/recipe.html', {'recipe': recipe})
