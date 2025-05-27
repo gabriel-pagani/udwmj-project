@@ -8,6 +8,12 @@
 {% endblock head %}
 
 {% block body %} 
-    <h1>teste</h1> 
+    <div class="recipe-grid">
+        {% for recipe_id, recipe_data in recipes.items %}
+            {% include 'app/partials/recipe_card.html' with recipe_id=recipe_id recipe_data=recipe_data %}
+        {% empty %}
+            <p>Nenhuma receita foi publicada até o momento.</p>
+        {% endfor %}
+    </div>
     <script src="{% static "app/js/script.js" %}"></script>
 {% endblock body %}

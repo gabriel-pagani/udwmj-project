@@ -1,1 +1,34 @@
+<div class="recipe-card">
+  <div class="recipe-image-container">
+    {% if recipe_data.5 %}
+    <img
+      src="{{ recipe_data.5.url }}"
+      alt="{{ recipe_data.0 }}"
+      class="recipe-image"
+    />
+    {% else %}
+    <div class="recipe-image-placeholder">
+      <i class="fa-solid fa-utensils" style="color: #f1f1f1"></i>
+    </div>
+    {% endif %}
 
+    <div class="recipe-actions">
+      <button class="action-btn heart-btn">
+        <i class="fa-regular fa-heart fa-xl" style="color: #f1f1f1"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="recipe-content">
+    <div class="recipe-header">
+      <h3 class="recipe-title">{{ recipe_data.0 }}</h3>
+      {% if recipe_data.6 %}
+      <span class="recipe-type {% cycle 'blue' 'green' 'orange' 'red' %}">
+        {{ recipe_data.6 }}
+      </span>
+      {% endif %}
+    </div>
+
+    <p class="recipe-description">{{ recipe_data.1 }}</p>
+  </div>
+</div>
