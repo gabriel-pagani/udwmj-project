@@ -271,6 +271,24 @@ body {
   color: var(--white);
 }
 
+.no-recipes {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--gray-primary);
+}
+
+.no-recipes i {
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.no-recipes p {
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
 @media (max-width: 768px) {
   .recipe-grid {
     grid-template-columns: 1fr;

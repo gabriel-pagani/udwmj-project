@@ -27,7 +27,10 @@
         {% for recipe_id, recipe_data in recipes.items %}
             {% include 'app/partials/recipe_card.html' with recipe_id=recipe_id recipe_data=recipe_data %}
         {% empty %}
-            <p>Nenhuma receita foi publicada até o momento.</p>
+            <div class="no-recipes">
+                <i class="fa-solid fa-magnifying-glass fa-3x"></i>
+                <p>No recipes have been published yet.</p>
+            </div>
         {% endfor %}
     </div>
     <script src="{% static "app/js/script.js" %}"></script>
