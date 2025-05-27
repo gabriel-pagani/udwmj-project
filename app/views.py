@@ -3,8 +3,11 @@ from app.models import Recipe
 
 
 def home(request):
+    published_recipes = Recipe.objects.filter(
+        is_published=True).select_related('category', 'author')
+
     recipes = dict()
-    for recipe in Recipe.objects.all():
+    for recipe in published_recipes:
         recipes[f'{recipe.id}'] = [
             recipe.title,
             recipe.description,
