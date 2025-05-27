@@ -4,8 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}{% endblock %} teste</title>
+    <title>Recipedia - {% block title %}{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" />
     <link href="{% static "global/css/reset.css" %}" rel="stylesheet"/>
     <link href="{% static "global/css/style.css" %}" rel="stylesheet"/>
     {% block head %}{% endblock %}
@@ -13,7 +14,28 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body>
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <img src="{% static "global/images/white-logo.png" %}">
+        </div>
+        Recipedia
+      </div>
+
+      <nav class="nav">
+        <a href="{% url 'app:home' %}">Home</a>
+        <a href="#about">About</a>
+      </nav>
+      
+      <a href="#account">
+        <i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>
+      </a>
+    </header>
+    
+    <main class="main-content">
     {% block body %}{% endblock body %}
+    </main>
+
     <script src="{% static "global/js/script.js" %}"></script>
   </body>
 </html>
