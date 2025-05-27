@@ -10,6 +10,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'created_at', 'is_published', 'author']
     list_display_links = 'title',
+    list_editable = 'is_published',
     search_fields = 'title', 'description',
     list_filter = 'category', 'is_published',
     ordering = '-id',
