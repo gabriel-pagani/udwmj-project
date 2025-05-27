@@ -22,4 +22,8 @@ def home(request):
             recipe.is_published,
         ]
 
-    return render(request, 'app/index.html', {'recipes': recipes})
+    return render(request, 'app/home.html', {'recipes': recipes})
+
+
+def about(request):
+    return render(request, 'app/about.html')
