@@ -290,6 +290,10 @@ body {
 }
 
 @media (max-width: 768px) {
+  .logo {
+    font-size: 0;
+  }
+
   .recipe-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
