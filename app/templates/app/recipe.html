@@ -24,33 +24,71 @@
                 <h1 class="recipe-title-detail">{{ recipe.title }}</h1>
                 <p class="recipe-description-detail">{{ recipe.description }}</p>
                 
-                <div class="recipe-meta">
+                <div class="recipe-stats">
                     {% if recipe.category %}
-                        <div class="meta-item">
-                            <i class="fa-solid fa-utensils"></i>
-                            <span>{{ recipe.category.name }}</span>
-                        </div>    
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-label">Category</div>
+                                <div class="stat-value">{{ recipe.category.name }}</div>                           
+                            </div>
+                        </div>
                     {% endif %}
-                    <div class="meta-item">
-                        <i class="fa-solid fa-users"></i>
-                        <span>{{ recipe.servings }} servings</span>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">{{ recipe.servings }}</div>
+                            <div class="stat-label">Person</div>
+                        </div>
                     </div>
-                    <div class="meta-item">
-                        <i class="fa-regular fa-clock"></i>
-                        <span>{{ recipe.preparation_time }} min</span>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">{{ recipe.preparation_time }}</div>
+                            <div class="stat-label">Minutes</div>
+                        </div>
                     </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-info">           
+                            <div class="stat-label">Published on</div>
+                            <div class="stat-value">{{ recipe.created_at|date:"d/m/Y" }}</div>
+                        </div>
+                    </div>
+
                     {% if recipe.author %}
-                    <div class="meta-item">
-                        <i class="fa-solid fa-user"></i>
-                        <span>created by {{ recipe.author.username }}</span>
-                    </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-label">Created by</div>
+                                <div class="stat-value">{{ recipe.author.username }}</div>
+                            </div>
+                        </div>
                     {% endif %}
                 </div>
             </div>
         </div>
         
         <div class="recipe-instructions">
-            <h2>Instructions</h2>
+            <div class="instructions-header">
+                <div class="instructions-icon">
+                    <i class="fa-solid fa-list-ol"></i>
+                </div>
+                <h2>Modo de Preparo</h2>
+            </div>
             <div class="instructions-content">
                 {{ recipe.instructions|linebreaks }}
             </div>
