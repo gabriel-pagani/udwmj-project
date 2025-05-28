@@ -1,10 +1,19 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 from app.models import Recipe
 
 
 def home(request):
+    search_query = request.GET.get('search', '').strip()
     published_recipes = Recipe.objects.filter(
         is_published=True).select_related('category', 'author')
+
+    if search_query:
+        published_recipes = published_recipes.filter(
+            Q(title__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(category__name__icontains=search_query)
+        )
 
     recipes = dict()
     for recipe in published_recipes:
@@ -22,7 +31,15 @@ def home(request):
             recipe.is_published,
         ]
 
-    return render(request, 'app/home.html', {'recipes': recipes})
+    context = {
+        'recipes': recipes,
+        'search_query': search_query,
+    }
+
+    if request.headers.get('HX-Request'):
+        return render(request, 'app/partials/recipe_grid.html', context)
+
+    return render(request, 'app/home.html', context)
 
 
 def about(request):

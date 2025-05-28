@@ -14,7 +14,17 @@
             <span class="search-icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </span>
-            <input type="text" class="search-input" placeholder="Search for recipe here!">
+            <input 
+                type="text" 
+                class="search-input" 
+                placeholder="Search for recipe here!"
+                name="search"
+                value="{{ search_query }}"
+                hx-get="{% url 'app:home' %}"
+                hx-target="#recipe-grid"
+                hx-trigger="keyup changed delay:300ms"
+                autocomplete="off"
+            >
         </div>
         <button class="filter-btn">
             <span>
@@ -27,15 +37,8 @@
         </button>
     </div>
 
-    <div class="recipe-grid">
-        {% for recipe_id, recipe_data in recipes.items %}
-            {% include 'app/partials/recipe_card.html' with recipe_id=recipe_id recipe_data=recipe_data %}
-        {% empty %}
-            <div class="no-recipes">
-                <i class="fa-solid fa-magnifying-glass fa-3x"></i>
-                <p>No recipes have been published yet.</p>
-            </div>
-        {% endfor %}
+    <div class="recipe-grid" id="recipe-grid">
+        {% include 'app/partials/recipe_grid.html' %}
     </div>
     <script src="{% static "app/js/script.js" %}"></script>
 {% endblock body %}

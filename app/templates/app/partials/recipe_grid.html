@@ -1,0 +1,14 @@
+{% for recipe_id, recipe_data in recipes.items %}
+    {% include 'app/partials/recipe_card.html' with recipe_id=recipe_id recipe_data=recipe_data %}
+{% empty %}
+    <div class="no-recipes">
+        {% if search_query %}
+            <i class="fa-solid fa-magnifying-glass fa-3x"></i>
+            <p>No recipes found for "{{ search_query }}".</p>
+            <p>Try searching with different keywords.</p>
+        {% else %}
+            <i class="fa-solid fa-magnifying-glass fa-3x"></i>
+            <p>No recipes have been published yet.</p>
+        {% endif %}
+    </div>
+{% endfor %}
