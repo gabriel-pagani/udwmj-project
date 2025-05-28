@@ -24,8 +24,8 @@
       </div>
 
       <nav class="nav">
-        <a href="{% url 'app:home' %}">Home</a>
-        <a href="{% url 'app:about' %}">About</a>
+        <a href="{% url 'app:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+        <a href="{% url 'app:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
       </nav>
       
       <a href="#account">
