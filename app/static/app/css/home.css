@@ -1,0 +1,119 @@
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-container {
+  position: relative;
+  flex: 1;
+  max-width: 600px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border: 2px solid var(--gray-medium);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: var(--white);
+  transition: border-color 0.3s ease;
+}
+
+.search-input::placeholder {
+  color: var(--gray-primary);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-primary);
+  font-size: 1.1rem;
+}
+
+.filter-btn {
+  padding: 0.8rem 1.2rem;
+  background-color: var(--white);
+  border-radius: 8px;
+  color: var(--gray-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-btn:hover {
+  color: var(--orange-primary);
+}
+
+.publish-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: var(--gray-primary);
+  color: var(--white);
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.publish-btn:hover {
+  background-color: var(--orange-primary);
+  color: var(--white);
+}
+
+.publish-btn .publish-text {
+  display: inline;
+}
+
+.publish-btn .publish-icon {
+  display: none;
+}
+
+.no-recipes {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--gray-primary);
+}
+
+.no-recipes i {
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.no-recipes p {
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .recipe-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .publish-btn .publish-text {
+    display: none;
+  }
+  .publish-btn .publish-icon {
+    display: inline;
+  }
+}
+
+@media (max-width: 480px) {
+  .recipe-title {
+    font-size: 1.2rem;
+  }
+}
