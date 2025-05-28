@@ -22,24 +22,27 @@
             
             <div class="recipe-info">
                 <h1 class="recipe-title-detail">{{ recipe.title }}</h1>
-                {% if recipe.category %}
-                    <span class="recipe-category">{{ recipe.category.name }}</span>
-                {% endif %}
                 <p class="recipe-description-detail">{{ recipe.description }}</p>
                 
                 <div class="recipe-meta">
-                    <div class="meta-item">
-                        <i class="fa-regular fa-clock"></i>
-                        <span>{{ recipe.preparation_time }} min</span>
-                    </div>
+                    {% if recipe.category %}
+                        <div class="meta-item">
+                            <i class="fa-solid fa-utensils"></i>
+                            <span>{{ recipe.category.name }}</span>
+                        </div>    
+                    {% endif %}
                     <div class="meta-item">
                         <i class="fa-solid fa-users"></i>
                         <span>{{ recipe.servings }} servings</span>
                     </div>
+                    <div class="meta-item">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>{{ recipe.preparation_time }} min</span>
+                    </div>
                     {% if recipe.author %}
                     <div class="meta-item">
                         <i class="fa-solid fa-user"></i>
-                        <span>{{ recipe.author.username }}</span>
+                        <span>created by {{ recipe.author.username }}</span>
                     </div>
                     {% endif %}
                 </div>
@@ -51,13 +54,6 @@
             <div class="instructions-content">
                 {{ recipe.instructions|linebreaks }}
             </div>
-        </div>
-        
-        <div class="recipe-actions-detail">
-            <a href="{% url 'app:home' %}" class="btn btn-secondary">
-                <i class="fa-solid fa-arrow-left"></i>
-                Back to Recipes
-            </a>
         </div>
     </div>
 {% endblock body %}

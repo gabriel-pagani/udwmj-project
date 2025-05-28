@@ -1,5 +1,5 @@
 .recipe-detail-container {
-    max-width: 800px;
+    max-width: 98%;
     margin: 2rem auto;
     padding: 0 1rem;
 }
@@ -87,28 +87,6 @@
 
 .recipe-actions-detail {
     text-align: center;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.btn-secondary {
-    background-color: var(--gray-medium);
-    color: var(--white);
-}
-
-.btn-secondary:hover {
-    background-color: var(--orange-primary);
-    color: var(--white);
-    text-decoration: none;
 }
 
 @media (max-width: 768px) {
