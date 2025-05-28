@@ -7,12 +7,23 @@
   --shadow: rgba(0, 0, 0, 0.1);
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: "Roboto Condensed", sans-serif;
   background-color: var(--gray-light);
 }
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 100px;  
   background-color: var(--orange-primary);
   padding: 1rem 2rem;
   display: flex;
@@ -86,14 +97,22 @@ body {
 }
 
 .main-content {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 2rem;
-  max-height: 100%;
-  max-width: 100%;
-  margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 @media (max-width: 768px) {
   .logo {
     font-size: 0;
+  }
+  
+  .main-content {
+    padding: 1rem;
   }
 }
