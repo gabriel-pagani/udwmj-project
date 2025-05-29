@@ -24,10 +24,11 @@
                 hx-get="{% url 'app:home' %}"
                 hx-target="#recipe-grid"
                 hx-trigger="keyup changed delay:300ms"
+                hx-include="[name='category'], [name='prep_time'], [name='servings'], [name='favorites']"
                 autocomplete="off"
             >
         </div>
-        <button class="filter-btn">
+        <button class="filter-btn" onclick="toggleFilters()">
             <span>
                 <i class="fa-solid fa-filter"></i>
             </span>
@@ -36,6 +37,72 @@
             <span class="publish-text">Publish a new recipe</span>
             <span class="publish-icon"><i class="fa-solid fa-plus"></i></span>
         </button>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-section" id="filters-section" style="display: none;">
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="category">Category:</label>
+                <select name="category" id="category" 
+                        hx-get="{% url 'app:home' %}"
+                        hx-target="#recipe-grid"
+                        hx-include="[name='search'], [name='prep_time'], [name='servings'], [name='favorites']">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.name }}" {% if selected_category == category.name %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="prep_time">Prep Time:</label>
+                <select name="prep_time" id="prep_time"
+                        hx-get="{% url 'app:home' %}"
+                        hx-target="#recipe-grid"
+                        hx-include="[name='search'], [name='category'], [name='servings'], [name='favorites']">
+                    <option value="">All Times</option>
+                    <option value="0-30" {% if selected_prep_time == '0-30' %}selected{% endif %}>0-30 minutes</option>
+                    <option value="31-60" {% if selected_prep_time == '31-60' %}selected{% endif %}>31-60 minutes</option>
+                    <option value="60+" {% if selected_prep_time == '60+' %}selected{% endif %}>60+ minutes</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="servings">Servings:</label>
+                <select name="servings" id="servings"
+                        hx-get="{% url 'app:home' %}"
+                        hx-target="#recipe-grid"
+                        hx-include="[name='search'], [name='category'], [name='prep_time'], [name='favorites']">
+                    <option value="">All Servings</option>
+                    <option value="1-2" {% if selected_servings == '1-2' %}selected{% endif %}>1-2 people</option>
+                    <option value="3-4" {% if selected_servings == '3-4' %}selected{% endif %}>3-4 people</option>
+                    <option value="5+" {% if selected_servings == '5+' %}selected{% endif %}>5+ people</option>
+                </select>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="filter-group">
+                <label for="favorites">Favorites:</label>
+                <select name="favorites" id="favorites"
+                        hx-get="{% url 'app:home' %}"
+                        hx-target="#recipe-grid"
+                        hx-include="[name='search'], [name='category'], [name='prep_time'], [name='servings']">
+                    <option value="">All recipes</option>
+                    <option value="true" {% if favorites_only %}selected{% endif %}>Favorites</option>
+                </select>
+            </div>
+            {% endif %}
+
+            <div class="filter-group">
+                <button class="clear-filters-btn" onclick="clearFilters()">
+                    <i class="fa-solid fa-times"></i>
+                    Clear Filters
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="recipe-grid" id="recipe-grid">
