@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from app.models import Recipe, Favorite, Category
-from django.contrib.postgres.search import TrigramSimilarity
+from rapidfuzz import fuzz
 
 
 def home(request):
@@ -18,11 +18,18 @@ def home(request):
         is_published=True).select_related('category', 'author')
 
     if search_query:
-        published_recipes = published_recipes.filter(
-            Q(title__icontains=search_query) |
-            Q(description__icontains=search_query) |
-            Q(category__name__icontains=search_query)
-        )
+        filtered_recipes = []
+        search_lower = search_query.lower()
+
+        for recipe in published_recipes:
+            title_score = fuzz.partial_ratio(search_lower, recipe.title.lower())
+            desc_score = fuzz.partial_ratio(search_lower, recipe.description.lower())
+            cat_score = fuzz.partial_ratio(search_lower, recipe.category.name.lower() if recipe.category else '')
+
+            if max(title_score, desc_score, cat_score) > 70:
+                filtered_recipes.append(recipe)
+
+        published_recipes = filtered_recipes
 
     if selected_category:
         published_recipes = published_recipes.filter(
