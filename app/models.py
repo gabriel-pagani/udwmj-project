@@ -35,3 +35,17 @@ class Recipe(models.Model):
     class Meta:
         verbose_name = 'Recipe'
         verbose_name_plural = 'Recipes'
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'recipe')
+        verbose_name = 'Favorite'
+        verbose_name_plural = 'Favorites'
+
+    def __str__(self):
+        return f'{self.user.username} - {self.recipe.title}'
