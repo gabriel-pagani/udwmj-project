@@ -90,7 +90,7 @@
                         hx-get="{% url 'app:home' %}"
                         hx-target="#recipe-grid"
                         hx-include="[name='search'], [name='category'], [name='prep_time'], [name='servings']">
-                    <option value="">All recipes</option>
+                    <option value="">All Recipes</option>
                     <option value="true" {% if favorites_only %}selected{% endif %}>Favorites</option>
                 </select>
             </div>
