@@ -18,10 +18,16 @@ def home(request):
         is_published=True).select_related('category', 'author')
 
     if search_query:
-        published_recipes = published_recipes.filter(
-            Q(title__icontains=search_query) |
-            Q(description__icontains=search_query) |
-            Q(category__name__icontains=search_query)
+        published_recipes = published_recipes.annotate(
+            similarity_title=TrigramSimilarity('title', search_query),
+            similarity_desc=TrigramSimilarity('description', search_query),
+            similarity_cat=TrigramSimilarity('category__name', search_query),
+        ).filter(
+            Q(similarity_title__gt=0.2) |
+            Q(similarity_desc__gt=0.2) |
+            Q(similarity_cat__gt=0.2)
+        ).order_by(
+            '-similarity_title', '-similarity_desc', '-similarity_cat'
         )
 
     if selected_category:
