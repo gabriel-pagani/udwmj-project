@@ -29,10 +29,12 @@ def home(request):
             cat_score = fuzz.partial_ratio(
                 search_lower, recipe.category.name.lower() if recipe.category else '')
 
-            if max(title_score, desc_score, cat_score) > 88:
-                filtered_recipes.append(recipe)
+            max_score = max(title_score, desc_score, cat_score)
+            if max_score > 75:
+                filtered_recipes.append((recipe, max_score))
 
-        published_recipes = filtered_recipes
+        filtered_recipes.sort(key=lambda x: x[1], reverse=True)
+        published_recipes = [recipe for recipe, score in filtered_recipes]
 
     if selected_category:
         published_recipes = published_recipes.filter(
