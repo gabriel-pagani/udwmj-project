@@ -37,7 +37,7 @@
                         </div>
                     {% endif %}
 
-                    <div class="stat-card">
+                    <div class="stat-card" title="Number of people this recipe serves">
                         <div class="stat-icon">
                             <i class="fa-solid fa-users"></i>
                         </div>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     
-                    <div class="stat-card">
+                    <div class="stat-card" title="Prep time for this recipe">
                         <div class="stat-icon">
                             <i class="fa-regular fa-clock"></i>
                         </div>
@@ -87,7 +87,7 @@
                 <div class="instructions-icon">
                     <i class="fa-solid fa-list-ol"></i>
                 </div>
-                <h2>Modo de Preparo</h2>
+                <h2>Instructions</h2>
             </div>
             <div class="instructions-content">
                 {{ recipe.instructions|linebreaks }}

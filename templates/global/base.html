@@ -16,19 +16,21 @@
   </head>
   <body>
     <header class="header">
+      <a href="{% url 'app:home' %}" title="Discover incredible recipes for all tastes in one place">
       <div class="logo">
         <div class="logo-icon">
           <img src="{% static "global/images/white-logo.png" %}">
         </div>
         Recipedia
       </div>
+      </a>
 
       <nav class="nav">
-        <a href="{% url 'app:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
-        <a href="{% url 'app:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+        <a href="{% url 'app:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" title="Website Home Page">Home</a>
+        <a href="{% url 'app:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}" title="Website Information Page">About</a>
       </nav>
       
-      <a href="#account">
+      <a href="#account" title="Click to access your account">
         <i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>
       </a>
     </header>

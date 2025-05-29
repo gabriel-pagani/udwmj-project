@@ -1,4 +1,4 @@
-<a href="{% url 'app:recipe_detail' recipe_id %}" class="recipe-card-link">
+<a href="{% url 'app:recipe_detail' recipe_id %}" class="recipe-card-link" title="Click to see the details of this recipe">
 <div class="recipe-card">
   <div class="recipe-image-container">
     {% if recipe_data.5 %}
@@ -13,7 +13,7 @@
     </div>
     {% endif %}
 
-    <div class="recipe-actions">
+    <div class="recipe-actions" title="Click to favorite/unfavorite this recipe">
       <button class="action-btn heart-btn {% if recipe_data.11 %}liked{% endif %}" 
               onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite('{{ recipe_id }}', this, {{ user.is_authenticated|yesno:"true,false" }});">
         <i class="{% if recipe_data.11 %}fa-solid{% else %}fa-regular{% endif %} fa-heart fa-xl"></i>
