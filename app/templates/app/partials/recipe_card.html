@@ -14,8 +14,9 @@
     {% endif %}
 
     <div class="recipe-actions">
-      <button class="action-btn heart-btn">
-        <i class="fa-regular fa-heart fa-xl" style="color: #f1f1f1"></i>
+      <button class="action-btn heart-btn {% if recipe_data.11 %}liked{% endif %}" 
+              onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite('{{ recipe_id }}', this, {{ user.is_authenticated|yesno:"true,false" }});">
+        <i class="{% if recipe_data.11 %}fa-solid{% else %}fa-regular{% endif %} fa-heart fa-xl"></i>
       </button>
     </div>
   </div>
