@@ -120,7 +120,7 @@
 }
 
 .filter-group select:focus {
-  border-color: var(--orange-primary);
+  border-color: var(--gray-primary);
 }
 
 .checkbox-label {

@@ -23,6 +23,11 @@ function toggleFavorite(recipeId, button, isAuthenticated) {
             heartIcon.classList.add('fa-regular');
             button.classList.remove('liked');
         }
+
+        const favoritesSelect = document.querySelector('[name="favorites"]');
+        if (favoritesSelect && favoritesSelect.value === 'true' && !data.is_favorited) {
+            favoritesSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
     })
     .catch(error => {
         console.error('Error:', error);
