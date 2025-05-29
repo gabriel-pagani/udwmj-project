@@ -6,6 +6,7 @@
 {% block head %}
     <link href="{% static "app/css/home.css" %}" rel="stylesheet"/>
     <link href="{% static "app/css/recipe_card.css" %}" rel="stylesheet"/>
+    {% csrf_token %}
 {% endblock head %}
 
 {% block body %} 
@@ -40,5 +41,5 @@
     <div class="recipe-grid" id="recipe-grid">
         {% include 'app/partials/recipe_grid.html' %}
     </div>
-    <script src="{% static "app/js/script.js" %}"></script>
+    <script src="{% static "app/js/home.js" %}"></script>
 {% endblock body %}

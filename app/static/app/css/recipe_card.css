@@ -68,7 +68,7 @@
 }
 
 .heart-btn {
-  color: var(--gray-dark);
+  color: #f1f1f1;
 }
 
 .heart-btn.liked {
