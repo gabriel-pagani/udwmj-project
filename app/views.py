@@ -22,11 +22,14 @@ def home(request):
         search_lower = search_query.lower()
 
         for recipe in published_recipes:
-            title_score = fuzz.partial_ratio(search_lower, recipe.title.lower())
-            desc_score = fuzz.partial_ratio(search_lower, recipe.description.lower())
-            cat_score = fuzz.partial_ratio(search_lower, recipe.category.name.lower() if recipe.category else '')
+            title_score = fuzz.partial_ratio(
+                search_lower, recipe.title.lower())
+            desc_score = fuzz.partial_ratio(
+                search_lower, recipe.description.lower())
+            cat_score = fuzz.partial_ratio(
+                search_lower, recipe.category.name.lower() if recipe.category else '')
 
-            if max(title_score, desc_score, cat_score) > 70:
+            if max(title_score, desc_score, cat_score) > 80:
                 filtered_recipes.append(recipe)
 
         published_recipes = filtered_recipes
