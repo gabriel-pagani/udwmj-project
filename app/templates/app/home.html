@@ -116,4 +116,13 @@
         {% include 'app/partials/recipe_grid.html' %}
     </div>
     <script src="{% static "app/js/home.js" %}"></script>
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    alert('{{ message }}');
+                {% endif %}
+            {% endfor %}
+        </script>
+    {% endif %}
 {% endblock body %}

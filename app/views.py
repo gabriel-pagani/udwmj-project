@@ -277,6 +277,8 @@ def create_recipe(request):
             recipe = form.save(commit=False)
             recipe.author = request.user
             recipe.save()
+            messages.success(
+                request, 'Your recipe has been sent for analysis.')
             return redirect('app:home')
         else:
             # Handle form errors
