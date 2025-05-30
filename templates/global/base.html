@@ -30,9 +30,40 @@
         <a href="{% url 'app:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}" title="Website Information Page">About</a>
       </nav>
       
-      <a href="#account" title="Click to access your account">
-        <i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>
-      </a>
+      <div class="account-menu">
+        <div id="account-trigger" class="account-trigger" title="Click to access your account">
+          <i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>
+        </div>
+        
+        <div id="account-dropdown" class="account-dropdown">
+          {% if user.is_authenticated %}
+            <div class="dropdown-header">
+              <div class="user-info">{{ user.username }}</div>
+              {% if user.email %}
+                <div class="user-email">{{ user.email }}</div>
+              {% endif %}
+            </div>
+            <div class="dropdown-menu">
+              <a href="{% url 'app:change_password' %}" class="dropdown-item">
+                <i class="fa-solid fa-key"></i>
+                <span>Change Password</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'app:logout' %}" class="dropdown-item">
+                <i class="fa-solid fa-sign-out-alt"></i>
+                <span>Logout</span>
+              </a>
+            </div>
+          {% else %}
+            <div class="dropdown-menu">
+              <a href="{% url 'app:login' %}" class="dropdown-item">
+                <i class="fa-solid fa-sign-in-alt"></i>
+                <span>Login</span>
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
     </header>
     
     <main class="main-content">

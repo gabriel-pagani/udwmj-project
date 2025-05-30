@@ -107,6 +107,114 @@ body {
   overflow-x: hidden;
 }
 
+/* Account Menu Styles */
+.account-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.account-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--shadow);
+  min-width: 200px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.account-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.account-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 20px;
+  width: 12px;
+  height: 12px;
+  background-color: var(--white);
+  transform: rotate(45deg);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--gray-light);
+  background-color: #fafafa;
+  border-radius: 8px 8px 0 0;
+}
+
+.dropdown-header .user-info {
+  font-weight: 600;
+  color: var(--gray-primary);
+  margin-bottom: 0.25rem;
+}
+
+.dropdown-header .user-email {
+  font-size: 0.85rem;
+  color: var(--gray-primary);
+  opacity: 0.8;
+}
+
+.dropdown-menu {
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #333;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: var(--orange-primary);
+}
+
+.dropdown-item i {
+  width: 16px;
+  color: var(--gray-primary);
+  transition: color 0.2s ease;
+}
+
+.dropdown-item:hover i {
+  color: var(--orange-primary);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: var(--gray-light);
+  margin: 0.5rem 0;
+}
+
+.account-trigger {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.account-trigger:hover {
+  opacity: 0.8;
+}
+
 @media (max-width: 768px) {
   .logo {
     font-size: 0;
