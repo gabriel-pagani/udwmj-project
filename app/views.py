@@ -249,12 +249,6 @@ def register_view(request):
                     else:
                         error_messages.append('Invalid username.')
 
-                if 'email' in form.errors:
-                    if 'already in use' in str(form.errors['email']):
-                        error_messages.append('This email is already in use.')
-                    else:
-                        error_messages.append('Invalid email.')
-
                 if 'password1' in form.errors:
                     error_messages.append(
                         'Password does not meet security requirements.')
