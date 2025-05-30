@@ -44,6 +44,12 @@
               {% endif %}
             </div>
             <div class="dropdown-menu">
+              {% if user.is_staff %}
+              <a href="{% url 'admin:index' %}" class="dropdown-item">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>Administrative Area</span>
+              </a>
+              {% endif %}
               <a href="{% url 'app:change_password' %}" class="dropdown-item">
                 <i class="fa-solid fa-key"></i>
                 <span>Change Password</span>
