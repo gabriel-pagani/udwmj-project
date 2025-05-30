@@ -33,10 +33,17 @@
                 <i class="fa-solid fa-filter"></i>
             </span>
         </button>
-        <button class="publish-btn">
-            <span class="publish-text">Publish a new recipe</span>
-            <span class="publish-icon"><i class="fa-solid fa-plus"></i></span>
-        </button>
+        {% if user.is_authenticated %}
+            <a href="{% url 'app:create_recipe' %}" class="publish-btn" title="Click to create a new recipe">
+                <span class="publish-text">Publish a new recipe</span>
+                <span class="publish-icon"><i class="fa-solid fa-plus"></i></span>
+            </a>
+        {% else %}
+            <button class="publish-btn" onclick="alert('You need to be logged in to create recipes.')" title="Login required to create recipes">
+                <span class="publish-text">Publish a new recipe</span>
+                <span class="publish-icon"><i class="fa-solid fa-plus"></i></span>
+            </button>
+        {% endif %}
     </div>
 
     <!-- Filtros -->

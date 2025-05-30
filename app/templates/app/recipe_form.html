@@ -1,0 +1,90 @@
+{% extends "global/base.html" %}
+{% load static %}
+
+{% block title %}Create New Recipe{% endblock title %}
+
+{% block head %}
+    <link href="{% static "app/css/recipe_form.css" %}" rel="stylesheet"/>
+{% endblock head %}
+
+{% block body %}
+    <div class="recipe-form-container">
+        <div class="recipe-form-card">
+            <div class="form-header">
+                <h1 class="form-title">
+                    Create New Recipe
+                </h1>
+                <p class="form-subtitle">
+                    Share your culinary creation with the community
+                </p>
+            </div>
+
+            {% if messages %}
+                <div class="form-messages">
+                    {% for message in messages %}
+                        <div class="form-message {{ message.tags }}">
+                            {% if 'error' in message.tags %}
+                                <i class="fas fa-circle-xmark"></i>
+                            {% elif 'success' in message.tags %}
+                                <i class="fas fa-circle-check"></i>
+                            {% endif %}
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form class="recipe-form" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">Recipe Title *</label>
+                    {{ form.title }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}" class="form-label">Description *</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="form-row-triple">
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+                        {{ form.category }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.preparation_time.id_for_label }}" class="form-label">Prep Time (min) *</label>
+                        {{ form.preparation_time }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.servings.id_for_label }}" class="form-label">Servings *</label>
+                        {{ form.servings }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.cover.id_for_label }}" class="form-label">Recipe Image</label>
+                    {{ form.cover }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.instructions.id_for_label }}" class="form-label">Cooking Instructions *</label>
+                    {{ form.instructions }}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-save"></i>
+                        Create Recipe
+                    </button>
+                    <a href="{% url 'app:home' %}" class="btn-cancel">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock body %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import Http404
-from app.forms import LoginForm, CustomPasswordChangeForm, RegisterForm
+from app.forms import LoginForm, CustomPasswordChangeForm, RegisterForm, RecipeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.http import JsonResponse
@@ -265,5 +265,29 @@ def register_view(request):
                     messages.error(request, error_msg)
 
     return render(request, 'app/auth/register.html', {
+        'form': form,
+    })
+
+
+@login_required
+def create_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save(commit=False)
+            recipe.author = request.user
+            recipe.save()
+            return redirect('app:home')
+        else:
+            # Handle form errors
+            if form.errors:
+                for field, errors in form.errors.items():
+                    for error in errors:
+                        messages.error(
+                            request, f"{field.replace('_', ' ').title()}: {error}")
+    else:
+        form = RecipeForm()
+
+    return render(request, 'app/recipe_form.html', {
         'form': form,
     })
