@@ -25,7 +25,12 @@
   border-radius: 8px;
   font-size: 1rem;
   background-color: var(--white);
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.search-input:focus {
+  box-shadow: 0 8px 16px var(--shadow);
 }
 
 .search-input::placeholder {
@@ -51,10 +56,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: 0 4px 8px var(--shadow);
 }
 
 .filter-btn:hover {
   color: var(--orange-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px var(--shadow);
 }
 
 .publish-btn {
@@ -65,11 +73,14 @@
   font-weight: 500;
   transition: all 0.3s ease;
   cursor: pointer;
+  box-shadow: 0 4px 8px var(--shadow);
 }
 
 .publish-btn:hover {
   background-color: var(--orange-primary);
   color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px var(--shadow);
 }
 
 .publish-btn .publish-text {
