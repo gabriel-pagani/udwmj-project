@@ -1,47 +1,68 @@
-<div>
-    <h2>Welcome!</h2>
-    {% if messages %} 
-      {% for message in messages %} 
-        {% if 'error' in message.tags %}
-          <div>
-            <i class="fas fa-circle-xmark"></i> 
-            <span>{{ message }}</span>
-          </div>            
-        {% endif %}
-        {% if 'warning' in message.tags %}
-          <div>
-            <i class="fas fa-circle-exclamation"></i> 
-            <span>{{ message }}</span>
-          </div>            
-        {% endif %}
-        {% if 'info' in message.tags %}
-          <div>
-            <i class="fas fa-circle-info"></i> 
-            <span>{{ message }}</span>
-          </div>            
-        {% endif %}
-        {% if 'success' in message.tags %}
-          <div>
-            <i class="fas fa-circle-check"></i> 
-            <span>{{ message }}</span>
-          </div>            
-        {% endif %}
-      {% endfor%} 
-    {% endif %}
-  
-    <form method="post" action="{{ form_action }}" novalidate>
-      {% csrf_token %}
-      <div>
-        <i class="fas fa-user"></i>
-        <input type="text" name="username" placeholder="User" />
+<div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2 class="auth-title">Welcome Back!</h2>
+        <p class="auth-subtitle">Sign in to access your account</p>
       </div>
   
-      <div>
-        <i class="fas fa-lock"></i>
-        <input type="password" name="password" placeholder="Password" />
-      </div>
+      {% if messages %}
+        <div class="auth-messages">
+          {% for message in messages %}
+            <div class="auth-message {{ message.tags }}">
+              {% if 'error' in message.tags %}
+                <i class="fas fa-circle-xmark"></i>
+              {% elif 'warning' in message.tags %}
+                <i class="fas fa-circle-exclamation"></i>
+              {% elif 'info' in message.tags %}
+                <i class="fas fa-circle-info"></i>
+              {% elif 'success' in message.tags %}
+                <i class="fas fa-circle-check"></i>
+              {% endif %}
+              <span>{{ message }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
   
-      <button type="submit">Login</button>
-    </form>
+      <form class="auth-form" method="post" action="{{ form_action }}" novalidate>
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <div class="form-input-container">
+            <input 
+              type="text" 
+              name="username" 
+              placeholder="Username" 
+              class="form-input"
+              required
+            />
+            <i class="fas fa-user form-icon"></i>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <div class="form-input-container">
+            <input 
+              type="password" 
+              name="password" 
+              placeholder="Password" 
+              class="form-input"
+              required
+            />
+            <i class="fas fa-lock form-icon"></i>
+          </div>
+        </div>
+  
+        <button type="submit" class="auth-button">
+          Sign In
+        </button>
+      </form>
+  
+      <div class="auth-footer">
+        <a href="{% url "app:home" %}" class="return-link">
+          <i class="fas fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </a>
+      </div>
+    </div>
   </div>
-  
