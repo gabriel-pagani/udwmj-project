@@ -1,0 +1,61 @@
+<div>
+  <h2>Password Change</h2>
+  {% if messages %} 
+    {% for message in messages %} 
+      {% if 'error' in message.tags %}
+        <div>
+          <i class="fas fa-circle-xmark"></i> 
+          <span>{{ message }}</span>
+        </div>            
+      {% endif %}
+      {% if 'warning' in message.tags %}
+        <div>
+          <i class="fas fa-circle-exclamation"></i> 
+          <span>{{ message }}</span>
+        </div>            
+      {% endif %}
+      {% if 'info' in message.tags %}
+        <div>
+          <i class="fas fa-circle-info"></i> 
+          <span>{{ message }}</span>
+        </div>            
+      {% endif %}
+      {% if 'success' in message.tags %}
+        <div>
+          <i class="fas fa-circle-check"></i> 
+          <span>{{ message }}</span>
+        </div>            
+      {% endif %}
+    {% endfor%} 
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div>
+      <i class="fas fa-lock"></i>
+      <input type="password" name="old_password" placeholder="Current Password" />
+    </div>
+
+    <div>
+      <i class="fas fa-lock"></i>
+      <input type="password" name="new_password1" placeholder="New Password" />
+    </div>
+
+    <ul>
+      <li>Your password must be at least 8 characters long.</li>
+      <li>Your password cannot be a commonly used password.</li>
+      <li>Your password cannot be entirely numeric.</li>
+    </ul>
+
+    <div>
+      <i class="fas fa-lock"></i>
+      <input type="password" name="new_password2" placeholder="Confirm new password" />
+    </div>
+
+    <button type="submit" >Save new password</button>
+  </form>
+
+    <a href="{% url "app:home" %}">
+      <div>Return</div>
+    </a>
+</div>

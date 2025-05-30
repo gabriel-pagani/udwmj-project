@@ -1,5 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from django.db.models import Q
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.http import Http404
+from app.forms import LoginForm, CustomPasswordChangeForm
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
@@ -137,3 +141,80 @@ def toggle_favorite(request, recipe_id):
         'is_favorited': is_favorited,
         'message': 'Recipe added to favorites' if is_favorited else 'Recipe removed from favorites'
     })
+
+
+def login_view(request):
+    form = LoginForm()
+    return render(request, 'app/auth/login.html', {
+        'form': form,
+        'form_action': reverse('app:login_done')
+    })
+
+
+def login_done(request):
+    if not request.POST:
+        raise Http404()
+
+    form = LoginForm(request.POST)
+
+    if form.is_valid():
+        username = form.cleaned_data.get('username', '')
+        password = form.cleaned_data.get('password', '')
+
+        user = authenticate(
+            username=username,
+            password=password,
+        )
+
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('app:home'))
+        else:
+            messages.error(request, 'Dados inválidos')
+    else:
+        messages.error(request, 'Preencha todos os campos')
+
+    return redirect(reverse('app:login'))
+
+
+@login_required
+def change_password_view(request):
+    user = request.user
+    form = CustomPasswordChangeForm(user, request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            saved_user = form.save()
+            update_session_auth_hash(request, saved_user)
+            messages.success(request, 'Sua senha foi alterada com sucesso')
+            return redirect(reverse('app:home'))
+
+        else:
+            old_password = form.data.get('old_password', '')
+            new_password1 = form.data.get('new_password1', '')
+            new_password2 = form.data.get('new_password2', '')
+
+            if not old_password or not new_password1 or not new_password2:
+                erro_mensagem = "Preencha todos os campos"
+            elif 'old_password' in form.errors:
+                erro_mensagem = "A senha atual está incorreta"
+            elif new_password1 != new_password2:
+                erro_mensagem = "As senhas não coincidem"
+            elif len(new_password1) < 8 and new_password1.isdigit():
+                erro_mensagem = "A nova senha deve ter pelo menos 8 caracteres e não pode ser inteiramente numérica"
+            elif 'new_password1' in form.errors:
+                erro_mensagem = "A nova senha não atende aos requisitos de segurança"
+            else:
+                erro_mensagem = "Ocorreu um erro ao alterar sua senha. Verifique os dados e tente novamente"
+
+            messages.error(request, erro_mensagem)
+
+    return render(request, 'app/auth/change_password.html', {
+        'form': form,
+    })
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('app:home')
