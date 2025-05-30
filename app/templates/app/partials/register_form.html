@@ -1,0 +1,104 @@
+<div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Join our culinary community</p>
+      </div>
+  
+      {% if messages %}
+        <div class="auth-messages">
+          {% for message in messages %}
+            <div class="auth-message {{ message.tags }}">
+              {% if 'error' in message.tags %}
+                <i class="fas fa-circle-xmark"></i>
+              {% elif 'warning' in message.tags %}
+                <i class="fas fa-circle-exclamation"></i>
+              {% elif 'info' in message.tags %}
+                <i class="fas fa-circle-info"></i>
+              {% elif 'success' in message.tags %}
+                <i class="fas fa-circle-check"></i>
+              {% endif %}
+              <span>{{ message }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+  
+      <form class="auth-form" method="post" novalidate>
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <div class="form-input-container">
+            <input 
+              type="text" 
+              name="username" 
+              placeholder="Username" 
+              class="form-input"
+              value="{{ form.username.value|default:'' }}"
+              required
+            />
+            <i class="fas fa-user form-icon"></i>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <div class="form-input-container">
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Email" 
+              class="form-input"
+              value="{{ form.email.value|default:'' }}"
+              required
+            />
+            <i class="fas fa-envelope form-icon"></i>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <div class="form-input-container">
+            <input 
+              type="password" 
+              name="password1" 
+              placeholder="Password" 
+              class="form-input"
+              required
+            />
+            <i class="fas fa-lock form-icon"></i>
+          </div>
+        </div>
+  
+        <div class="password-requirements">
+          <ul>
+            <li>Your password must be 8 characters or longer.</li>
+            <li>Your password cannot be simple.</li>
+            <li>Your password cannot contain only numbers.</li>
+          </ul>
+        </div>
+  
+        <div class="form-group">
+          <div class="form-input-container">
+            <input 
+              type="password" 
+              name="password2" 
+              placeholder="Confirm Password" 
+              class="form-input"
+              required
+            />
+            <i class="fas fa-lock form-icon"></i>
+          </div>
+        </div>
+  
+        <button type="submit" class="auth-button">
+          Create Account
+        </button>
+      </form>
+  
+      <div class="auth-footer">
+        <a href="{% url "app:login" %}" class="return-link">
+          <i class="fas fa-arrow-left"></i>
+          <span>Already have an account? Sign in here</span>
+        </a>
+      </div>
+    </div>
+  </div>

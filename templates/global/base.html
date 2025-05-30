@@ -56,6 +56,11 @@
             </div>
           {% else %}
             <div class="dropdown-menu">
+              <a href="{% url 'app:register' %}" class="dropdown-item">
+                <i class="fa-solid fa-user"></i>
+                <span>Create Account</span>
+              </a>
+              <div class="dropdown-divider"></div>
               <a href="{% url 'app:login' %}" class="dropdown-item">
                 <i class="fa-solid fa-sign-in-alt"></i>
                 <span>Login</span>

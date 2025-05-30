@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.http import Http404
-from app.forms import LoginForm, CustomPasswordChangeForm
+from app.forms import LoginForm, CustomPasswordChangeForm, RegisterForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.http import JsonResponse
@@ -170,9 +170,9 @@ def login_done(request):
             login(request, user)
             return redirect(reverse('app:home'))
         else:
-            messages.error(request, 'Dados inválidos')
+            messages.error(request, 'Invalid data')
     else:
-        messages.error(request, 'Preencha todos os campos')
+        messages.error(request, 'Fill in all fields')
 
     return redirect(reverse('app:login'))
 
@@ -186,7 +186,6 @@ def change_password_view(request):
         if form.is_valid():
             saved_user = form.save()
             update_session_auth_hash(request, saved_user)
-            messages.success(request, 'Sua senha foi alterada com sucesso')
             return redirect(reverse('app:home'))
 
         else:
@@ -195,17 +194,17 @@ def change_password_view(request):
             new_password2 = form.data.get('new_password2', '')
 
             if not old_password or not new_password1 or not new_password2:
-                erro_mensagem = "Preencha todos os campos"
+                erro_mensagem = "Fill in all fields"
             elif 'old_password' in form.errors:
-                erro_mensagem = "A senha atual está incorreta"
+                erro_mensagem = "Current password is incorrect"
             elif new_password1 != new_password2:
-                erro_mensagem = "As senhas não coincidem"
+                erro_mensagem = "Passwords do not match"
             elif len(new_password1) < 8 and new_password1.isdigit():
-                erro_mensagem = "A nova senha deve ter pelo menos 8 caracteres e não pode ser inteiramente numérica"
+                erro_mensagem = "The new password must be at least 8 characters long and cannot be entirely numeric."
             elif 'new_password1' in form.errors:
-                erro_mensagem = "A nova senha não atende aos requisitos de segurança"
+                erro_mensagem = "The new password does not meet security requirements"
             else:
-                erro_mensagem = "Ocorreu um erro ao alterar sua senha. Verifique os dados e tente novamente"
+                erro_mensagem = "An error occurred while changing your password. Please check your details and try again."
 
             messages.error(request, erro_mensagem)
 
@@ -218,3 +217,59 @@ def change_password_view(request):
 def logout_view(request):
     logout(request)
     return redirect('app:home')
+
+
+def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('app:home')
+
+    form = RegisterForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            user = form.save()
+            # Authenticate and login automatically after registration
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1']
+            )
+            if user:
+                login(request, user)
+                return redirect('app:home')
+        else:
+            # Custom error handling
+            if form.errors:
+                error_messages = []
+
+                # Check specific errors
+                if 'username' in form.errors:
+                    if 'already in use' in str(form.errors['username']):
+                        error_messages.append(
+                            'This username is already in use.')
+                    else:
+                        error_messages.append('Invalid username.')
+
+                if 'email' in form.errors:
+                    if 'already in use' in str(form.errors['email']):
+                        error_messages.append('This email is already in use.')
+                    else:
+                        error_messages.append('Invalid email.')
+
+                if 'password1' in form.errors:
+                    error_messages.append(
+                        'Password does not meet security requirements.')
+
+                if 'password2' in form.errors:
+                    error_messages.append('Passwords do not match.')
+
+                # If no specific errors, use generic message
+                if not error_messages:
+                    error_messages.append(
+                        'Please check the information provided and try again.')
+
+                for error_msg in error_messages:
+                    messages.error(request, error_msg)
+
+    return render(request, 'app/auth/register.html', {
+        'form': form,
+    })
