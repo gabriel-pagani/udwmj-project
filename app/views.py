@@ -118,7 +118,16 @@ def about(request):
 
 def recipe_detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id, is_published=True)
-    return render(request, 'app/recipe.html', {'recipe': recipe})
+
+    is_favorited = False
+    if request.user.is_authenticated:
+        is_favorited = Favorite.objects.filter(
+            user=request.user, recipe=recipe).exists()
+
+    return render(request, 'app/recipe.html', {
+        'recipe': recipe,
+        'is_favorited': is_favorited
+    })
 
 
 @login_required

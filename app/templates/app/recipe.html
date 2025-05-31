@@ -5,6 +5,7 @@
 
 {% block head %}
     <link href="{% static "app/css/recipe.css" %}" rel="stylesheet"/>
+    {% csrf_token %}
 {% endblock head %}
 
 {% block body %}
@@ -28,7 +29,16 @@
             </div>
             
             <div class="recipe-info">
-                <h1 class="recipe-title-detail">{{ recipe.title }}</h1>
+                <div class="recipe-title-section">
+                    <h1 class="recipe-title-detail">{{ recipe.title }}</h1>
+                    {% if user.is_authenticated %}
+                        <button class="recipe-favorite-btn {% if is_favorited %}liked{% endif %}" 
+                                onclick="toggleFavorite('{{ recipe.id }}', this, true);" 
+                                title="Click to favorite/unfavorite this recipe">
+                            <i class="{% if is_favorited %}fa-solid{% else %}fa-regular{% endif %} fa-heart"></i>
+                        </button>
+                    {% endif %}
+                </div>
                 <p class="recipe-description-detail">{{ recipe.description }}</p>
                 
                 <div class="recipe-stats">
@@ -101,4 +111,5 @@
             </div>
         </div>
     </div>
+    <script src="{% static "app/js/home.js" %}"></script>
 {% endblock body %}

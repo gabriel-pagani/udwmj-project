@@ -289,6 +289,38 @@
     background-color: #fef7f0;
 }
 
+.recipe-title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.recipe-favorite-btn {
+    background: none;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #e7e7e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 48px;
+    font-size: 1.8rem;
+}
+
+.recipe-favorite-btn:hover {
+    transform: scale(1.1);
+}
+
+.recipe-favorite-btn.liked {
+    color: #e74c3c;
+}
+
 @media (max-width: 768px) {
     .recipe-header-detail {
         grid-template-columns: 1fr;
