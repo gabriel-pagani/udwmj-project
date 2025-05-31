@@ -56,7 +56,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 2rem;
+  gap: 0rem;
 }
 
 .nav a {
@@ -222,5 +222,16 @@ body {
   
   .main-content {
     padding: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .nav a {
+    font-size: 1.2rem;
   }
 }
