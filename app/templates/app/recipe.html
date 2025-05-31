@@ -9,6 +9,13 @@
 
 {% block body %}
     <div class="recipe-detail-container">
+        <div class="recipe-back-navigation">
+            <a href="{% url 'app:home' %}" class="return-link">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to Home</span>
+            </a>
+        </div>
+        
         <div class="recipe-header-detail">
             <div class="recipe-image-detail">
                 {% if recipe.cover %}
