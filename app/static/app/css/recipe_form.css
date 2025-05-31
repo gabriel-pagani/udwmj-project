@@ -11,6 +11,7 @@
     padding: 2rem;
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .recipe-form-card::before {
@@ -43,24 +44,38 @@
 .recipe-form {
     display: grid;
     gap: 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Ensure all form elements stay within container */
+.recipe-form * {
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-row-triple {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-label {
@@ -78,6 +93,9 @@
     font-size: 0.95rem;
     background-color: var(--white);
     transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .form-input:focus,
@@ -102,6 +120,9 @@
     transition: all 0.3s ease;
     cursor: pointer;
     font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .form-file-input:hover {
