@@ -623,4 +623,59 @@
         height: 200px;
         padding: 0.75rem;
     }
+
+    .chef-ai-input-area {
+        padding: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .chef-ai-input {
+        margin-right: 0;
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    .chef-ai-send-btn {
+        flex: 0 0 auto;
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .chef-ai-modal-content {
+        width: 95%;
+        max-width: 320px;
+        max-height: 75vh;
+    }
+
+    .chef-ai-input-area {
+        padding: 0.4rem;
+        gap: 0.4rem;
+    }
+
+    .chef-ai-input {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .chef-ai-send-btn {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .chef-ai-chatbox {
+        height: 180px;
+        padding: 0.5rem;
+    }
+
+    .chef-ai-modal-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .chef-ai-modal-header h2 {
+        font-size: 1.1rem;
+    }
 }
