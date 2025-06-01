@@ -9,6 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from app.models import Recipe, Favorite, Category
 from rapidfuzz import fuzz
+import google.generativeai as genai
+import json
+from django.conf import settings
 
 
 def home(request):
@@ -302,3 +305,69 @@ def create_recipe(request):
     return render(request, 'app/recipe_form.html', {
         'form': form,
     })
+
+
+@require_POST
+def chef_ai_assistant(request, recipe_id):
+    try:
+        data = json.loads(request.body)
+        user_query = data.get('query', '').strip()
+
+        if not user_query:
+            return JsonResponse({'error': 'Nenhuma pergunta fornecida.'}, status=400)
+
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+
+        api_key = getattr(settings, 'GEMINI_API_KEY', None)
+        if not api_key:
+            return JsonResponse({'error': 'Chave da API Gemini não configurada no servidor.'}, status=500)
+
+        genai.configure(api_key=api_key)
+
+        generation_config = {
+            "temperature": 0.5,
+            "top_p": 1,
+            "top_k": 1,
+            "max_output_tokens": 2048,
+        }
+
+        safety_settings = [
+            {"category": "HARM_CATEGORY_HARASSMENT",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+            {"category": "HARM_CATEGORY_HATE_SPEECH",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"},
+        ]
+
+        model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash-latest",
+            generation_config=generation_config,
+            safety_settings=safety_settings
+        )
+
+        prompt_parts = [
+            f"Você é o Chef AI, um assistente prestativo do site Recipedia.",
+            f"Um usuário está visualizando a receita '{recipe.title}'.",
+            f"Descrição da Receita: \"{recipe.description}\"",
+            f"Instruções da Receita: \"{recipe.instructions}\"",
+            f"\nO usuário tem a seguinte pergunta: \"{user_query}\"",
+            f"\nPor favor, responda à pergunta do usuário com base nos detalhes da receita e no seu conhecimento geral de culinária. Responda em português.",
+            "Se a pergunta for uma saudação, responda educadamente.",
+            "Se a pergunta não estiver relacionada à receita ou à culinária, decline educadamente de responder.",
+            "Mantenha suas respostas concisas e úteis."
+        ]
+
+        response = model.generate_content(prompt_parts)
+        ai_response = response.text
+
+        return JsonResponse({'answer': ai_response})
+
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'JSON inválido.'}, status=400)
+    except Recipe.DoesNotExist:
+        return JsonResponse({'error': 'Receita não encontrada.'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': 'Desculpe, o Chef AI está enfrentando dificuldades técnicas no momento. Tente novamente mais tarde.'}, status=500)

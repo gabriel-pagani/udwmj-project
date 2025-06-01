@@ -6,6 +6,11 @@
 {% block head %}
     <link href="{% static "app/css/recipe.css" %}" rel="stylesheet"/>
     {% csrf_token %}
+    <script>
+        window.recipeData = {
+            id: "{{ recipe.id }}"
+        };
+    </script>
 {% endblock head %}
 
 {% block body %}
@@ -111,5 +116,30 @@
             </div>
         </div>
     </div>
+
+    <div id="chefAiFab" class="chef-ai-fab" title="Pergunte ao Chef AI">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <div id="chefAiModal" class="chef-ai-modal">
+        <div class="chef-ai-modal-content">
+            <div class="chef-ai-modal-header">
+                <div>
+                    <h2>Chef AI Assistant</h2>
+                    <p class="recipe-context">Asking about: "{{recipe.title}}"</p>
+                </div>
+                <span id="chefAiClose" class="chef-ai-close">&times;</span>
+            </div>
+            <div id="chefAiChatbox" class="chef-ai-chatbox">
+                <p class="ai-msg"><strong>Chef AI:</strong> Olá! Como posso ajudar com esta receita?</p>
+            </div>
+            <div class="chef-ai-input-area">
+                <input type="text" id="chefAiInput" class="chef-ai-input" placeholder="Enter your question...">
+                <button id="chefAiSendBtn" class="chef-ai-send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{% static "app/js/recipe.js" %}"></script>
     <script src="{% static "app/js/home.js" %}"></script>
 {% endblock body %}
