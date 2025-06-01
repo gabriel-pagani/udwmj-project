@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (chefAiFab) {
         chefAiFab.onclick = function() {
-            chefAiModal.style.display = "block";
+            chefAiModal.style.display = "flex";
         }
     }
 
